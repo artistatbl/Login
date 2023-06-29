@@ -26,5 +26,11 @@ public class DataInserter {
     public static void main(String[] args) {
         DataInserter dataInserter = new DataInserter();
         dataInserter.insertUserData("jeandaly", "admin1");
+        dataInserter.insertUserData("johnsmith", "password123");
+        dataInserter.insertUserData("janedoe", "securepass");
+            // Add more insertUserData calls for additional user records
+        
+
+       
     }
 }

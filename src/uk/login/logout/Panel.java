@@ -1,14 +1,12 @@
 package uk.login.logout;
 
-
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
-import javax.swing.border.AbstractBorder;
-import javax.swing.border.*;
+import java.util.prefs.Preferences;
 
+import javax.swing.*;
+import javax.swing.border.LineBorder;
 
 public class Panel extends JFrame {
 
@@ -17,6 +15,10 @@ public class Panel extends JFrame {
     private JPasswordField passwordField;
     private JTextField txtThemify;
     private DatabaseManager databaseManager;
+    private JRadioButton rememberRadioButton;
+    
+ // Preferences key for storing the username
+    private static final String USERNAME_PREF_KEY = "username";
 
 
     /**
@@ -39,7 +41,7 @@ public class Panel extends JFrame {
      * Create the frame.
      */
     public Panel() {
-    	
+
         databaseManager = new DatabaseManager();
 
         setUndecorated(true);
@@ -63,12 +65,12 @@ public class Panel extends JFrame {
         panel_1.setBounds(35, 138, 270, 37);
         panel.add(panel_1);
         panel_1.setLayout(null);
-        
-                textField = new JTextField();
-                textField.setBounds(6, 6, 177, 26);
-                panel_1.add(textField);
-                textField.setBorder(null);
-                textField.setColumns(10);
+
+        textField = new JTextField();
+        textField.setBounds(6, 6, 177, 26);
+        panel_1.add(textField);
+        textField.setBorder(null);
+        textField.setColumns(10);
 
         JPanel panel_1_1 = new JPanel();
         panel_1_1.setBorder(new LineBorder(Color.BLACK, 1, true));
@@ -76,45 +78,43 @@ public class Panel extends JFrame {
         panel_1_1.setBounds(35, 211, 270, 36);
         panel.add(panel_1_1);
         panel_1_1.setLayout(null);
-        
-                passwordField = new JPasswordField();
-                passwordField.setBounds(6, 6, 177, 26);
-                panel_1_1.add(passwordField);
-                passwordField.setBorder(null);
-        
+
+        passwordField = new JPasswordField();
+        passwordField.setBounds(6, 6, 177, 26);
+        panel_1_1.add(passwordField);
+        passwordField.setBorder(null);
 
         JPanel panel_2 = new JPanel();
         panel_2.setBackground(Color.CYAN);
         panel_2.setBounds(198, 298, 107, 37);
         panel.add(panel_2);
         panel_2.setLayout(null);
-        
-                JButton loginButton = new JButton("LOG IN");
-                loginButton.setBounds(25, 15, 61, 16);
-                panel_2.add(loginButton);
-                loginButton.setBorder(null);
-                loginButton.setForeground(Color.WHITE);
-                loginButton.setBackground(Color.CYAN);
-                loginButton.setFont(new Font("SansSerif", Font.BOLD, 14));
-                
-                // Event listener for the login button
-                loginButton.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        String username = textField.getText();
-                        char[] password = passwordField.getPassword();
 
-                        if (databaseManager.validateUser(username, String.valueOf(password))) {
-                            JOptionPane.showMessageDialog(Panel.this, "Login Successful");
-                        } else {
-                            JOptionPane.showMessageDialog(Panel.this, "Invalid username or password", "Login Failed",
-                                    JOptionPane.ERROR_MESSAGE);
-                        }
+        JButton loginButton = new JButton("LOG IN");
+        loginButton.setBounds(25, 15, 61, 16);
+        panel_2.add(loginButton);
+        loginButton.setBorder(null);
+        loginButton.setForeground(Color.WHITE);
+        loginButton.setBackground(Color.CYAN);
+        loginButton.setFont(new Font("SansSerif", Font.BOLD, 14));
 
-                        textField.setText("");
-                        passwordField.setText("");
-                    }
-                });
+        // Event listener for the login button
+        loginButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String username = textField.getText();
+                char[] password = passwordField.getPassword();
 
+                if (databaseManager.validateUser(username, String.valueOf(password))) {
+                    JOptionPane.showMessageDialog(Panel.this, "Login Successful");
+                } else {
+                    JOptionPane.showMessageDialog(Panel.this, "Invalid username or password", "Login Failed",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+
+                textField.setText("");
+                passwordField.setText("");
+            }
+        });
 
         JLabel lblNewLabel_1 = new JLabel("Forgotten Password?");
         lblNewLabel_1.setForeground(Color.CYAN);
@@ -134,15 +134,12 @@ public class Panel extends JFrame {
         lblNewLabel_3.setFont(new Font("SansSerif", lblNewLabel_3.getFont().getStyle(), lblNewLabel_3.getFont().getSize()));
         lblNewLabel_3.setBounds(35, 123, 129, 16);
         panel.add(lblNewLabel_3);
-        
-        JRadioButton rdbtnNewRadioButton = new JRadioButton("Remember me");
-        rdbtnNewRadioButton.setForeground(Color.WHITE);
-        rdbtnNewRadioButton.setHorizontalTextPosition(SwingConstants.RIGHT);
-        rdbtnNewRadioButton.setHorizontalAlignment(SwingConstants.CENTER);
-        rdbtnNewRadioButton.setAlignmentX(Component.RIGHT_ALIGNMENT);
-        rdbtnNewRadioButton.setBounds(23, 312, 141, 23);
-        panel.add(rdbtnNewRadioButton);
-        
+
+        rememberRadioButton = new JRadioButton("Remember me");
+        rememberRadioButton.setForeground(Color.WHITE);
+        rememberRadioButton.setBounds(23, 312, 141, 23);
+        panel.add(rememberRadioButton);
+
         txtThemify = new JTextField();
         txtThemify.setDisabledTextColor(Color.GRAY);
         txtThemify.setSelectionColor(Color.GRAY);
@@ -153,8 +150,15 @@ public class Panel extends JFrame {
         txtThemify.setBounds(106, 32, 101, 62);
         panel.add(txtThemify);
         txtThemify.setColumns(10);
-        
+
+        setLocationRelativeTo(null);
+
+        // Retrieve stored username if exists
+     
         setLocationRelativeTo(null);
     }
+
+
+  
 
 }
