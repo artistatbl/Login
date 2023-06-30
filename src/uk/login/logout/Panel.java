@@ -7,18 +7,17 @@ import java.util.prefs.Preferences;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.border.CompoundBorder;
 
 public class Panel extends JFrame {
 
     private JPanel contentPane;
-    private JTextField textField;
-    private JPasswordField passwordField;
-    private JTextField txtThemify;
     private DatabaseManager databaseManager;
-    private JRadioButton rememberRadioButton;
     
  // Preferences key for storing the username
     private static final String USERNAME_PREF_KEY = "username";
+    private JTextField textField;
+    private JPasswordField passwordField;
 
 
     /**
@@ -46,119 +45,80 @@ public class Panel extends JFrame {
 
         setUndecorated(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 400, 350, 400);
+        setBounds(100, 400, 850, 425);
         contentPane = new JPanel();
         contentPane.setBorder(new LineBorder(UIManager.getColor("Button.darkShadow")));
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
         setContentPane(contentPane);
-
+        
+       
+        
         JPanel panel = new JPanel();
-        panel.setForeground(new Color(255, 255, 255));
-        panel.setBorder(new LineBorder(Color.BLACK, 2, true));
         panel.setBackground(Color.GRAY);
         contentPane.add(panel);
         panel.setLayout(null);
-
+        
         JPanel panel_1 = new JPanel();
-        panel_1.setBorder(new LineBorder(Color.BLACK, 1, true));
-        panel_1.setBackground(Color.WHITE);
-        panel_1.setBounds(35, 138, 270, 37);
+        panel_1.setBounds(0, 0, 390, 423);
         panel.add(panel_1);
         panel_1.setLayout(null);
-
+        
+        JLabel lblNewLabel = new JLabel("Welcome Back");
+        lblNewLabel.setFont(new Font("Lahore Gurmukhi", Font.BOLD, 20));
+        lblNewLabel.setBounds(98, 40, 161, 16);
+        panel_1.add(lblNewLabel);
+        
+        JButton btnNewButton = new JButton("Log in with Google");
+        btnNewButton.setBounds(38, 99, 294, 35);
+        panel_1.add(btnNewButton);
+        
         textField = new JTextField();
-        textField.setBounds(6, 6, 177, 26);
+        textField.setBounds(38, 182, 294, 35);
         panel_1.add(textField);
-        textField.setBorder(null);
         textField.setColumns(10);
-
-        JPanel panel_1_1 = new JPanel();
-        panel_1_1.setBorder(new LineBorder(Color.BLACK, 1, true));
-        panel_1_1.setBackground(Color.WHITE);
-        panel_1_1.setBounds(35, 211, 270, 36);
-        panel.add(panel_1_1);
-        panel_1_1.setLayout(null);
-
+        
+        JButton btnNewButton_1 = new JButton("LOG IN");
+        btnNewButton_1.setBounds(38, 313, 294, 44);
+        panel_1.add(btnNewButton_1);
+        
+        JLabel lblNewLabel_1 = new JLabel("Email Address ");
+        lblNewLabel_1.setBounds(42, 168, 110, 16);
+        panel_1.add(lblNewLabel_1);
+        
         passwordField = new JPasswordField();
-        passwordField.setBounds(6, 6, 177, 26);
-        panel_1_1.add(passwordField);
-        passwordField.setBorder(null);
-
-        JPanel panel_2 = new JPanel();
-        panel_2.setBackground(Color.CYAN);
-        panel_2.setBounds(198, 298, 107, 37);
-        panel.add(panel_2);
-        panel_2.setLayout(null);
-
-        JButton loginButton = new JButton("LOG IN");
-        loginButton.setBounds(25, 15, 61, 16);
-        panel_2.add(loginButton);
-        loginButton.setBorder(null);
-        loginButton.setForeground(Color.WHITE);
-        loginButton.setBackground(Color.CYAN);
-        loginButton.setFont(new Font("SansSerif", Font.BOLD, 14));
-
-        // Event listener for the login button
-        loginButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String username = textField.getText();
-                char[] password = passwordField.getPassword();
-
-                if (databaseManager.validateUser(username, String.valueOf(password))) {
-                    JOptionPane.showMessageDialog(Panel.this, "Login Successful");
-                } else {
-                    JOptionPane.showMessageDialog(Panel.this, "Invalid username or password", "Login Failed",
-                            JOptionPane.ERROR_MESSAGE);
-                }
-
-                textField.setText("");
-                passwordField.setText("");
-            }
-        });
-
-        JLabel lblNewLabel_1 = new JLabel("Forgotten Password?");
-        lblNewLabel_1.setForeground(Color.CYAN);
-        lblNewLabel_1.setFont(new Font("SansSerif", Font.BOLD, 11));
-        lblNewLabel_1.setBackground(new Color(0, 0, 0));
-        lblNewLabel_1.setBounds(35, 247, 128, 16);
-        panel.add(lblNewLabel_1);
-
+        passwordField.setBounds(38, 241, 289, 35);
+        panel_1.add(passwordField);
+        
         JLabel lblNewLabel_2 = new JLabel("Password");
-        lblNewLabel_2.setForeground(Color.WHITE);
-        lblNewLabel_2.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        lblNewLabel_2.setBounds(35, 190, 61, 16);
-        panel.add(lblNewLabel_2);
+        lblNewLabel_2.setBounds(42, 229, 61, 16);
+        panel_1.add(lblNewLabel_2);
+        
+        JCheckBox chckbxNewCheckBox = new JCheckBox("Remember me");
+        chckbxNewCheckBox.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
+        chckbxNewCheckBox.setBounds(38, 275, 128, 23);
+        panel_1.add(chckbxNewCheckBox);
+        
+        JLabel lblNewLabel_3 = new JLabel("Forget password?");
+        lblNewLabel_3.setForeground(new Color(255, 70, 6));
+        lblNewLabel_3.setBounds(213, 279, 110, 16);
+        panel_1.add(lblNewLabel_3);
+        
+        JLabel lblNewLabel_5 = new JLabel("Don't have an account yet? Sign up.");
+        lblNewLabel_5.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 
-        JLabel lblNewLabel_3 = new JLabel("Username or Email");
-        lblNewLabel_3.setForeground(Color.WHITE);
-        lblNewLabel_3.setFont(new Font("SansSerif", lblNewLabel_3.getFont().getStyle(), lblNewLabel_3.getFont().getSize()));
-        lblNewLabel_3.setBounds(35, 123, 129, 16);
-        panel.add(lblNewLabel_3);
-
-        rememberRadioButton = new JRadioButton("Remember me");
-        rememberRadioButton.setForeground(Color.WHITE);
-        rememberRadioButton.setBounds(23, 312, 141, 23);
-        panel.add(rememberRadioButton);
-
-        txtThemify = new JTextField();
-        txtThemify.setDisabledTextColor(Color.GRAY);
-        txtThemify.setSelectionColor(Color.GRAY);
-        txtThemify.setFont(new Font("SignPainter", Font.PLAIN, 40));
-        txtThemify.setText("Themify");
-        txtThemify.setBorder(null);
-        txtThemify.setBackground(Color.GRAY);
-        txtThemify.setBounds(106, 32, 101, 62);
-        panel.add(txtThemify);
-        txtThemify.setColumns(10);
+        lblNewLabel_5.setBounds(98, 369, 197, 16);
+        panel_1.add(lblNewLabel_5);
+        
+        JLabel lblNewLabel_4 = new JLabel("");
+        lblNewLabel_4.setIcon(new ImageIcon("/Users/dalyjean/Downloads/bg.png"));
+        lblNewLabel_4.setBounds(430, 29, 400, 333);
+        panel.add(lblNewLabel_4);
+       
 
         setLocationRelativeTo(null);
 
         // Retrieve stored username if exists
      
-        setLocationRelativeTo(null);
+        
     }
-
-
-  
-
 }
